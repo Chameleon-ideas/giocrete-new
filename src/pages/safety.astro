@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { client } from '../sanity/lib/client';
+import { safetyQuery } from '../sanity/lib/queries';
+
+const safetyData = await client.fetch(safetyQuery);
+
+const title = safetyData?.title || "Zero Compromise";
+const subtitle = safetyData?.subtitle || "At GioCrete, safety is the foundation of everything we build. Our COR™ certification reflects our commitment to the highest standards of occupational excellence.";
+const metrics = safetyData?.metrics || [
+  { value: '100%', label: 'PPE Compliance' },
+  { value: 'DAILY', label: 'Tailgate Meetings' },
+  { value: 'OHSA', label: 'Fully Compliant' },
+  { value: '0', label: 'Lost Time Injuries' }
+];
+const protocols = safetyData?.protocols || [
+  { title: 'Underground Safety', description: 'Specialized shoring and trench safety protocols for all sewer and watermain operations.' },
+  { title: 'Mechanical Safety', description: 'Weekly inspections on all heavy machinery, excavators, and utility trucks.' },
+  { title: 'Personnel Training', description: 'Continuous OHSA certification and specialized training for unionized personnel.' },
+  { title: 'Environmental Protection', description: 'Strict protocols for site water management and sediment control.' }
+];
+---
+
+<Layout title="Health & Safety" headerVariant="dark">
+  <!-- Hero Section (Deep Industrial) -->
+  <section class="min-h-[70vh] bg-bg-dark text-white pt-48 pb-24 overflow-hidden relative">
+     <div class="absolute inset-0 opacity-10 pointer-events-none select-none flex items-center justify-center">
+        <span class="text-[30vw] font-bold editorial-title whitespace-nowrap">SAFETY</span>
+     </div>
+     
+     <div class="container relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-end">
+           <div class="lg:col-span-8 reveal-up">
+              <span class="label !text-accent">Our Highest Priority</span>
+              <h1 class="editorial-title text-7xl md:text-9xl mb-12" set:html={title} />
+              <p class="text-xl md:text-2xl text-white/50 leading-relaxed max-w-2xl">
+                 {subtitle}
+              </p>
+           </div>
+           <div class="lg:col-span-4 flex justify-end reveal-up">
+              <div class="w-64 h-64 border border-accent/20 flex flex-col items-center justify-center p-8 bg-black/50 backdrop-blur-xl">
+                 <span class="editorial-title text-8xl text-accent leading-none">COR</span>
+                 <span class="text-[10px] uppercase font-bold tracking-[0.2em] text-white/40 mt-4">Certified Safety</span>
+              </div>
+           </div>
+        </div>
+     </div>
+  </section>
+
+  <!-- Metric Bar -->
+  <section class="bg-black py-16 border-y border-white/5">
+     <div class="container">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+           {metrics.map((stat: any, idx: number) => (
+              <div class="reveal-up">
+                 <span class="editorial-title text-4xl md:text-6xl text-accent block mb-2">{stat.value}</span>
+                 <span class="text-[10px] uppercase tracking-widest text-white/30">{stat.label}</span>
+              </div>
+           ))}
+        </div>
+     </div>
+  </section>
+
+  <!-- Protocols Section -->
+  <section class="section bg-white dark:bg-bg-dark transition-colors duration-700">
+     <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+           
+           <div class="lg:col-span-4 reveal-up">
+              <span class="label">Site Standards</span>
+              <h2 class="editorial-title text-5xl md:text-7xl mb-12 text-charcoal dark:text-light">Work-Site <br/><span class="text-accent italic">Protocols</span></h2>
+              <div class="h-[1px] w-full bg-border dark:bg-white/10 mb-12"></div>
+              <p class="text-muted dark:text-light/60 leading-relaxed uppercase tracking-wide text-xs">
+                 Mandatory daily safety briefings before any machinery is operated on a GioCrete job site.
+              </p>
+           </div>
+
+           <div class="lg:col-span-8 reveal-up">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
+                 {protocols.map((protocol: any, idx: number) => (
+                    <div>
+                       <span class="text-accent editorial-title text-5xl block mb-6 opacity-20">0{idx + 1}</span>
+                       <h3 class="editorial-title text-3xl mb-6 text-charcoal dark:text-light">{protocol.title}</h3>
+                       <p class="text-lg text-muted dark:text-light/60 leading-relaxed">{protocol.description}</p>
+                    </div>
+                 ))}
+              </div>
+           </div>
+
+        </div>
+     </div>
+  </section>
+
+  <!-- Certification Wall -->
+  <section class="section bg-black overflow-hidden">
+     <div class="container">
+        <div class="flex flex-col items-center text-center reveal-up">
+           <span class="label !text-accent">Certified Partners</span>
+           <div class="flex flex-wrap justify-center items-center gap-16 md:gap-32 mt-20 grayscale opacity-40">
+              {['GTSWCA', 'ORCGA', 'IHSA', 'WSIB', 'COR'].map(item => (
+                 <span class="editorial-title text-3xl md:text-5xl text-white hover:text-accent transition-colors cursor-default">{item}</span>
+              ))}
+           </div>
+        </div>
+     </div>
+  </section>
+</Layout>

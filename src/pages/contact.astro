@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm';
+
+export const prerender = true;
+
+const address = '101 Kenhar Drive, North York, ON, M9L 1N5';
+const phone = '416-743-4100';
+const email = 'office@giocrete.com';
+---
+
+<Layout title="Contact Operations" headerVariant="light">
+  <section class="min-h-screen flex flex-col lg:flex-row pt-36 bg-concrete">
+    
+    <!-- Left Panel: Info & Visual (Staggered Editorial) -->
+    <div class="lg:w-1/2 p-12 md:p-24 lg:p-32 flex flex-col justify-center border-r border-site-border">
+      <div class="reveal-up">
+        <span class="label">Reach Out</span>
+        <h1 class="editorial-title text-5xl md:text-7xl lg:text-8xl leading-[0.8] mb-16">
+          Inquire <br/><span class="text-accent italic">Directly</span>
+        </h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+           <div>
+              <span class="text-[10px] uppercase font-bold tracking-[0.3em] text-muted mb-4 block">HQs</span>
+              <p class="text-xl font-bold uppercase tracking-tight leading-tight">
+                 {address}
+              </p>
+           </div>
+           <div class="flex flex-col gap-8">
+              <div>
+                 <span class="text-[10px] uppercase font-bold tracking-[0.3em] text-muted mb-4 block">Operations</span>
+                 <a href={`tel:${phone}`} class="text-xl font-bold uppercase tracking-tight hover:text-accent transition-colors block">
+                    {phone}
+                 </a>
+              </div>
+              <div>
+                 <span class="text-[10px] uppercase font-bold tracking-[0.3em] text-muted mb-4 block">Archive</span>
+                 <a href={`mailto:${email}`} class="text-xl font-bold uppercase tracking-tight hover:text-accent transition-colors block">
+                    {email}
+                 </a>
+              </div>
+           </div>
+        </div>
+
+        <!-- Industrial Imagery Overlay -->
+        <div class="aspect-video bg-bg-dark border border-site-border relative overflow-hidden group">
+           <iframe
+              src="https://www.google.com/maps?q=101+Kenhar+Drive,+North+York,+ON,+M9L+1N5,+Canada&output=embed"
+              class="absolute inset-0 w-full h-full grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy">
+           </iframe>
+           <div class="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+              <span class="text-[10px] font-bold text-accent uppercase tracking-widest">Site Coordinates // GTA</span>
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: The Form (Industrial Minimal) -->
+    <div class="lg:w-1/2 bg-bg-dark p-12 md:p-24 lg:p-32 flex flex-col justify-center text-white">
+      <div class="max-w-xl w-full reveal-up">
+        <span class="label !text-accent">Project Form</span>
+        <h3 class="editorial-title text-4xl md:text-6xl mb-12">Submit Your <br/>Credentials</h3>
+        <ContactForm client:load />
+        <div class="mt-12 flex items-center justify-between opacity-30 text-[10px] uppercase font-bold tracking-widest">
+           <span>Union Contractor</span>
+           <span>EST 2007</span>
+           <span>Local 183</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</Layout>

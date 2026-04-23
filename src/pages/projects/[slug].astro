@@ -1,0 +1,142 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { HoverButton } from '../../components/HoverButton';
+import { client } from '../../sanity/lib/client';
+import { projectsQuery } from '../../sanity/lib/queries';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const projects = await client.fetch(projectsQuery);
+  return projects.map((p: any) => ({
+    params: { slug: p.slug },
+    props: { project: p },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={project.title} headerVariant="light">
+  <!-- Hero Section -->
+  <section class="h-[80vh] min-h-[600px] relative overflow-hidden flex items-end">
+    <div class="absolute inset-0 z-0">
+      <img 
+        src={project.image} 
+        alt={project.title} 
+        class="w-full h-full object-cover grayscale brightness-50"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+    </div>
+    
+    <div class="container relative z-10 pb-20">
+      <div class="max-w-4xl reveal-up">
+        <span class="label text-accent mb-6 block">Project Case Study</span>
+        <h1 class="editorial-title text-6xl md:text-8xl text-white mb-8 uppercase tracking-tighter leading-[0.85]">
+          {project.title}
+        </h1>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12">
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-white/50 block mb-2">Client</span>
+            <span class="text-sm font-semibold text-white tracking-tight">{project.client}</span>
+          </div>
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-white/50 block mb-2">Location</span>
+            <span class="text-sm font-semibold text-white tracking-tight">{project.location}</span>
+          </div>
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-white/50 block mb-2">Completion</span>
+            <span class="text-sm font-semibold text-white tracking-tight">2024</span>
+          </div>
+          <div>
+            <span class="text-[10px] uppercase tracking-widest text-white/50 block mb-2">Sector</span>
+            <span class="text-sm font-semibold text-white tracking-tight">{project.municipality}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="section bg-concrete dark:bg-bg-dark border-b border-site-border dark:border-white/5 transition-colors duration-700">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+        <!-- Overview -->
+        <div class="lg:col-span-12 reveal-up">
+          <span class="label">Project Overview</span>
+          <p class="text-2xl md:text-3xl text-charcoal dark:text-light leading-relaxed mb-20 max-w-5xl">
+            {project.overview}
+          </p>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="lg:col-span-8">
+          <div class="mb-20 reveal-up">
+            <h3 class="editorial-title text-4xl mb-12 text-charcoal dark:text-light underline decoration-accent decoration-2 underline-offset-8">Scope of <span class="italic text-accent">Work</span></h3>
+            <ul class="space-y-6">
+              {project.scope.map((item) => (
+                <li class="flex gap-6 items-start border-l-2 border-accent/20 pl-8 py-2">
+                  <span class="text-sm text-muted dark:text-light/70 leading-relaxed font-medium uppercase tracking-wide">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="reveal-up border-t border-site-border dark:border-white/10 pt-20">
+            <h3 class="editorial-title text-4xl mb-12 text-charcoal dark:text-light">The <span class="italic text-accent">Challenge</span></h3>
+            <p class="text-xl text-muted dark:text-light/70 leading-relaxed">
+              {project.challenge}
+            </p>
+          </div>
+        </div>
+
+        <!-- Sidebar / Metadata -->
+        <div class="lg:col-span-4 reveal-up">
+            <div class="sticky top-32 space-y-12 bg-white dark:bg-black/20 p-8 md:p-12 border border-site-border dark:border-white/10 shadow-sm">
+                <div>
+                    <span class="text-[10px] font-bold text-accent uppercase tracking-widest block mb-4">Operations Type</span>
+                    <p class="text-sm text-charcoal dark:text-light font-semibold uppercase tracking-wider">{project.type}</p>
+                </div>
+                <div class="h-[1px] w-full bg-site-border dark:bg-white/10"></div>
+                <div>
+                   <h4 class="editorial-title text-2xl mb-6 text-charcoal dark:text-light">Scale Your <span class="italic text-accent">Infrastructure</span>.</h4>
+                   <p class="text-sm text-muted dark:text-white/40 mb-8 leading-relaxed">We specialize in high-complexity infrastructure projects across the GTA. Our unionized crew brings precision and safety to every trench.</p>
+                   <a href="/contact" class="no-underline">
+                     <HoverButton client:load variant="primary" className="w-full !py-4">
+                       Inquire Capabilities
+                     </HoverButton>
+                   </a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secondary Images / Gallery (Optional - using current image for now) -->
+   <section class="section bg-concrete dark:bg-bg-dark border-b border-site-border dark:border-white/5 pt-0 transition-colors duration-700">
+      <div class="container">
+          <div class="aspect-video w-full overflow-hidden reveal-up">
+              <img 
+                  src={project.image} 
+                  alt={`${project.title} Detail`} 
+                  class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-1000"
+              />
+          </div>
+      </div>
+   </section>
+
+  <!-- Navigation -->
+  <section class="py-24 bg-concrete dark:bg-bg-dark transition-colors duration-700">
+    <div class="container flex flex-col md:flex-row justify-between items-center gap-12">
+       <a href="/projects" class="text-[10px] font-bold uppercase tracking-[0.3em] text-muted hover:text-accent transition-colors flex items-center gap-4">
+         <span class="text-xl">←</span> 
+         Archive
+       </a>
+       
+       <div class="flex gap-12 text-[10px] font-bold uppercase tracking-[0.3em]">
+          <a href="/projects" class="text-accent underline underline-offset-8 decoration-2">Explore Other Operations</a>
+       </div>
+    </div>
+  </section>
+</Layout>

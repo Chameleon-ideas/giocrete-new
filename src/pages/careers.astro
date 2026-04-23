@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { HoverButton } from '../components/HoverButton';
+import { client } from '../sanity/lib/client';
+import { careersQuery } from '../sanity/lib/queries';
+
+const careers = await client.fetch(careersQuery);
+
+const reasons = careers?.reasons || [
+  { title: 'Union Protection & Benefits', desc: 'Industry-leading healthcare, pension plans, and worker protection through Local 183 and 793.' },
+  { title: 'Career Growth Paths', desc: 'Clear pathways from pipe layers to site supervisors and project managers.' },
+  { title: 'Modern Machinery', desc: 'Operate the latest heavy civil hardware, maintained to the highest standards.' },
+  { title: 'Stability & Pride', desc: 'Secure long-term contracts on the city’s most mission-critical assets.' }
+];
+
+const roles = careers?.roles || ['Labourer', 'Operator', 'Foreman', 'Project Manager'];
+---
+
+<Layout title="Join the Crew" headerVariant="dark">
+  <!-- Hero Section -->
+  <section class="min-h-[80vh] flex flex-col justify-center bg-black text-white p-12 md:p-24 lg:p-32 relative overflow-hidden">
+     <!-- Massive background Text -->
+     <div class="absolute inset-0 opacity-10 pointer-events-none select-none flex items-center justify-center">
+        <span class="text-[30vw] font-bold editorial-title whitespace-nowrap">CAREERS</span>
+     </div>
+     
+     <div class="relative z-10 max-w-6xl reveal-up">
+        <span class="label !text-accent">Work At GioCrete</span>
+        <h1 class="editorial-title text-7xl md:text-9xl lg:text-[12rem] mb-12" set:html={careers?.heroTitle || "Building <br/><span class='text-accent italic'>Toronto</span>"} />
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
+           <div class="md:col-span-8">
+              <p class="text-2xl text-white/50 max-w-2xl leading-relaxed">
+                 {careers?.heroSubtitle || "We’re more than a contractor. We’re a unionized crew built on grit, excellence, and the pride of maintaining the city's critical infrastructure."}
+              </p>
+           </div>
+           <div class="md:col-span-4 flex md:justify-end">
+              <div class="border border-accent/20 p-6 flex flex-col items-center">
+                 <span class="editorial-title text-3xl text-accent">LOCAL 183</span>
+                 <span class="text-[10px] uppercase font-bold tracking-widest text-white/40 mt-2">+ LOCAL 793</span>
+              </div>
+           </div>
+        </div>
+     </div>
+  </section>
+
+  <!-- Advantages (Asymmetric) -->
+  <section class="section bg-white dark:bg-bg-dark border-y border-site-border dark:border-white/5 transition-colors duration-700">
+     <div class="container">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+           
+           <div class="lg:col-span-4 reveal-up">
+              <h2 class="editorial-title text-5xl md:text-7xl mb-12 text-charcoal dark:text-light" set:html={careers?.reasonsTitle || "The GioCrete <br/><span class='text-accent italic'>Advantage.</span>"} />
+              <p class="text-muted dark:text-light/60 leading-relaxed">
+                 Join a team where expertise is valued and career growth is standard.
+              </p>
+           </div>
+
+           <div class="lg:col-span-8 reveal-up">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-24">
+                 {reasons.map((reason: any, idx: number) => (
+                    <div>
+                       <span class="text-accent editorial-title text-5xl block mb-6 opacity-20">0{idx + 1}</span>
+                       <h3 class="editorial-title text-2xl mb-4 text-charcoal dark:text-light">{reason.title}</h3>
+                       <p class="text-lg text-muted dark:text-light/60 leading-relaxed">{reason.desc}</p>
+                    </div>
+                 ))}
+              </div>
+           </div>
+
+        </div>
+     </div>
+  </section>
+
+  <!-- Job Openings & Call to Action -->
+  <section class="section bg-black text-white relative">
+     <div class="container relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
+           <div class="lg:col-span-6 reveal-up">
+              <span class="label !text-accent">Direct Application</span>
+              <h3 class="editorial-title text-5xl md:text-8xl mb-12" set:html={careers?.ctaHeading || "Join the <br/><span class='italic text-accent'>Operations</span>"} />
+              
+              <div class="space-y-6 mb-12">
+                 {roles.map((role: string) => (
+                    <div class="flex items-center justify-between py-6 border-b border-white/10 group">
+                       <span class="editorial-title text-3xl group-hover:text-accent transition-colors">{role}</span>
+                       <span class="text-[10px] font-bold uppercase tracking-widest text-white/30 border border-white/10 px-4 py-2">Full-Time</span>
+                    </div>
+                 ))}
+              </div>
+
+              <div class="bg-accent/10 border border-accent/20 p-10 text-center">
+                 <p class="text-lg text-white mb-8">{careers?.ctaText || "Ready to start? Send your resume and certifications directly to our office."}</p>
+                 <a href="mailto:office@giocrete.com?subject=Application" class="no-underline block">
+                   <HoverButton client:load variant="primary" className="w-full !py-6 !px-12">
+                     Send Credentials
+                   </HoverButton>
+                 </a>
+              </div>
+           </div>
+           
+           <div class="lg:col-span-6 reveal-up">
+              <div class="aspect-square bg-white shadow-2xl rotate-1 overflow-hidden">
+                 <img 
+                    src="/images/contact-image.png" 
+                    class="w-full h-full object-cover grayscale opacity-80" 
+                    alt="Union Crew" 
+                 />
+              </div>
+           </div>
+        </div>
+     </div>
+  </section>
+</Layout>

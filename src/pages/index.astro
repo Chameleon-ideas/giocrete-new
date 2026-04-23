@@ -1,0 +1,142 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import ServiceTiles from "../components/ServiceTiles.astro";
+import ProjectCard from "../components/ProjectCard";
+import { HoverButton } from "../components/HoverButton";
+
+import { client } from "../sanity/lib/client";
+import { homeQuery, projectsQuery } from "../sanity/lib/queries";
+
+const homeData = await client.fetch(homeQuery);
+const portfolioItems = await client.fetch(projectsQuery);
+
+const headline = homeData?.heroHeadline || "Critical Foundation. Precision Execution.";
+const subtext = homeData?.heroSubtext || "Toronto's premier underground civil contractors. Specializing in high-complexity sewer, watermain, and road reconstruction since 2007.";
+
+const stats = homeData?.stats || [
+  { value: '15+', label: 'Years of Service' },
+  { value: 'GTA', label: 'Core Area' },
+  { value: 'COR', label: 'Safety Certified' },
+  { value: 'LOCAL', label: 'Union Crew' },
+];
+
+const legacyTitle = homeData?.legacyTitle || "Precision in the Trenches.";
+const legacyText = homeData?.legacyText || "GioCrete Construction is a specialized civil contractor focusing on the backbone of Toronto's infrastructure. From deep-trench watermain installations to multi-phase road reconstructions, our unionized crew delivers precision where it matters most.";
+const legacyImage = homeData?.legacyImage || "/images/random.png";
+---
+
+<Layout 
+  title="Infrastructure Specialists" 
+  headerVariant="light"
+>
+
+  <Hero
+    badge="Established 2007"
+    headline={headline}
+    subtext={subtext}
+    ctaPrimary={{ label: "Our Operations", href: "/projects" }}
+    ctaSecondary={{ label: "Union Careers", href: "/careers" }}
+  />
+
+  <!-- ── 01. STATS / CREDIBILITY (ASYSMMETRIC GRID) ─────────────────── -->
+  <section class="section bg-concrete dark:bg-bg-dark border-b border-site-border dark:border-white/5 overflow-hidden transition-colors duration-700">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-end">
+        <div class="lg:col-span-7 reveal-up">
+          <span class="label">Expertise</span>
+          <h2 class="editorial-title text-4xl md:text-6xl max-w-2xl text-charcoal dark:text-light" set:html={homeData?.expertiseTitle || "Building the Backbone of the <span class='text-accent italic'>Greater Toronto Area.</span>"} />
+        </div>
+        <div class="lg:col-span-5 reveal-up">
+          <div class="grid grid-cols-2 gap-8 border-l border-site-border dark:border-white/10 pl-8 md:pl-12">
+            {stats.map((stat: any) => (
+              <div>
+                <span class="text-5xl font-semibold editorial-title block text-charcoal dark:text-light">{stat.value}</span>
+                <span class="text-[10px] uppercase tracking-widest text-muted dark:text-white/40">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 02. SERVICES (EDITORIAL SPLIT) ──────────────────────────────── -->
+  <ServiceTiles />
+
+  <!-- ── 03. PORTFOLIO (STAGGERED MASONRY-INSPIRED) ──────────────────── -->
+  <section class="section bg-charcoal text-light">
+    <div class="container">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-20 reveal-up gap-8">
+        <div class="max-w-2xl">
+          <span class="label">Gallery</span>
+          <h2 class="editorial-title text-4xl sm:text-5xl md:text-7xl leading-[0.95]">Recent <br/>Operations</h2>
+        </div>
+        <a href="/projects" class="no-underline">
+          <HoverButton client:load variant="secondary" className="!py-4 !px-10 !text-current">
+            View Full Archive →
+          </HoverButton>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {portfolioItems.map((item: any, idx: number) => (
+          <div class={`reveal-up ${idx === 1 ? 'md:translate-y-12' : ''}`}>
+             <ProjectCard
+                client:idle
+                title={item.title}
+                municipality={item.municipality || "GTA"}
+                image={item.image}
+                href={`/projects/${item.slug}`}
+              />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04. LEGACY CALLOUT ─────────────────────────────────────────── -->
+  <section class="section bg-concrete dark:bg-bg-dark overflow-hidden relative transition-colors duration-700">
+     <!-- Massive background Text -->
+     <div class="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] select-none flex items-center justify-center">
+        <span class="text-[25vw] font-bold editorial-title whitespace-nowrap text-charcoal dark:text-white">INFRASTRUCTURE</span>
+     </div>
+
+     <div class="container relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+           <div class="lg:col-span-5 reveal-up">
+              <div class="aspect-[4/5] bg-black overflow-hidden border border-site-border dark:border-white/10 group">
+                <img 
+                    src={legacyImage} 
+                    alt="GioCrete Legacy" 
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-80 dark:opacity-60 group-hover:scale-105 group-hover:opacity-100"
+                />
+              </div>
+           </div>
+
+           <div class="lg:col-span-7 reveal-up">
+              <span class="label">The Legacy</span>
+              <h3 class="editorial-title text-5xl md:text-7xl mb-12 text-charcoal dark:text-light" set:html={legacyTitle} />
+              <p class="text-xl text-muted dark:text-light/60 leading-relaxed mb-12 max-w-2xl">
+                 {legacyText}
+              </p>
+              <div class="flex flex-col sm:flex-row gap-6">
+                 <a href="/about" class="no-underline">
+                   <HoverButton client:load variant="secondary" className="!py-4 !px-10 !text-current">
+                     Discover Our Story
+                   </HoverButton>
+                 </a>
+                 <a href="/careers" class="no-underline">
+                   <HoverButton client:load variant="primary" className="!py-4 !px-10">
+                     Join the Crew
+                   </HoverButton>
+                 </a>
+              </div>
+           </div>
+        </div>
+     </div>
+  </section>
+
+</Layout>

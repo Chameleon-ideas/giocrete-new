@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { HoverButton } from '../components/HoverButton';
+import { services } from '../data/services';
+---
+
+<Layout title="Specializations" headerVariant="dark">
+  <!-- Hero Section (Massive Impact) -->
+  <section class="min-h-[70vh] flex flex-col justify-end bg-black text-white p-12 md:p-24 lg:p-32 relative overflow-hidden">
+     <!-- Abstract machinery bg -->
+     <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2000" class="w-full h-full object-cover grayscale opacity-20" alt="Machinery" />
+     </div>
+
+     <div class="relative z-10 max-w-6xl reveal-up">
+        <span class="label">Expertise</span>
+        <h1 class="editorial-title text-7xl md:text-9xl lg:text-[12rem] mb-12">
+           Operations <br/><span class="text-accent italic">Industrial</span>
+        </h1>
+        <p class="text-2xl text-white/50 max-w-2xl leading-relaxed">
+           Precision execution in critical civil assets for the GTA's municipal sector. Handling the complexity of modern urban infrastructure.
+        </p>
+     </div>
+  </section>
+
+  <!-- Specialization Exploration -->
+  <section class="bg-concrete">
+     {services.map((service, idx) => (
+        <article class="border-b border-site-border">
+           <div class="container py-24 md:py-32">
+              <div class={`grid grid-cols-1 lg:grid-cols-12 gap-16 items-center ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                 
+                 <!-- Visual Block (7 Columns) -->
+                 <div class={`lg:col-span-7 reveal-up ${idx % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                    <div class="relative group overflow-hidden">
+                       <div class="aspect-[16/9] bg-bg-dark border border-site-border overflow-hidden">
+                          <img 
+                             src={service.image} 
+                             alt={service.title} 
+                             class="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" 
+                          />
+                       </div>
+                       <!-- Industrial coordinates overlay -->
+                       <div class="absolute top-8 right-8 text-white/20 text-[10px] font-mono tracking-widest hidden md:block">
+                          COORD // 43.7615° N, 79.4111° W
+                       </div>
+                    </div>
+                 </div>
+
+                 <!-- Information Block (5 Columns) -->
+                 <div class={`lg:col-span-5 reveal-up ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                    <span class="text-accent editorial-title text-6xl md:text-8xl block mb-8 opacity-20">0{idx + 1}</span>
+                    <h2 class="editorial-title text-5xl md:text-6xl mb-8">{service.title}</h2>
+                    <p class="text-lg md:text-xl text-muted leading-relaxed mb-12">
+                       {service.description}
+                    </p>
+                    <ul class="space-y-6 mb-12 border-l border-accent/20 pl-8">
+                       <li class="group flex items-center justify-between">
+                          <span class="text-xs font-bold uppercase tracking-[0.2em] text-muted group-hover:text-black transition-colors">Grade Compliance</span>
+                          <div class="h-[1px] flex-1 mx-4 bg-border"></div>
+                          <span class="text-[10px] text-accent font-bold uppercase">Certified</span>
+                       </li>
+                       <li class="group flex items-center justify-between">
+                          <span class="text-xs font-bold uppercase tracking-[0.2em] text-muted group-hover:text-black transition-colors">Union Trained</span>
+                          <div class="h-[1px] flex-1 mx-4 bg-border"></div>
+                          <span class="text-[10px] text-accent font-bold uppercase">Local 183</span>
+                       </li>
+                    </ul>
+                    <a href={`/services/${service.slug}`} class="no-underline">
+                      <HoverButton client:load variant="secondary" className="!py-4 !px-10 !text-current">
+                        View Technical Scope
+                      </HoverButton>
+                    </a>
+                 </div>
+
+              </div>
+           </div>
+        </article>
+     ))}
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-black text-white py-32 text-center overflow-hidden relative">
+     <div class="container relative z-10 reveal-up">
+        <span class="label !text-accent">Partner with us</span>
+        <h3 class="editorial-title text-5xl md:text-8xl mb-12">Building the city's <br/><span class="italic text-accent">Critical Assets</span>.</h3>
+        <a href="/contact" class="no-underline inline-block">
+          <HoverButton client:load variant="primary" className="!px-16 !py-6 !text-lg">
+            Inquire Now
+          </HoverButton>
+        </a>
+     </div>
+  </section>
+</Layout>

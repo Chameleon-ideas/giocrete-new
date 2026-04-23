@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# build artifacts
+dist/
+.vercel/
+.astro/
+
+# misc
+.DS_Store
+.env
+.env.*
+!.env.example
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# sanity (just in case any cache left)
+.sanity/

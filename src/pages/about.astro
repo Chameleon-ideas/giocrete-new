@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { client } from '../sanity/lib/client';
+import { aboutQuery } from '../sanity/lib/queries';
+
+const aboutData = await client.fetch(aboutQuery);
+
+const team = aboutData?.team || [
+  { role: 'Operations Manager', name: 'Site lead' },
+  { role: 'Site Supervisor', name: 'Field Lead' },
+  { role: 'H&S Coordinator', name: 'Safety Lead' },
+  { role: 'Project Lead', name: 'Technical Lead' }
+];
+
+const affiliations = aboutData?.affiliations || [
+  { name: 'GTSWCA Member', desc: 'Active participants in the Sewer and Watermain associations.' },
+  { name: 'ORCGA Registered', desc: 'Committed to safe excavation and infrastructure protection.' },
+  { name: 'Union Local 183 & 793', desc: 'Proudly employing the city’s skilled unionized workforce.' },
+  { name: 'COR Certified', desc: 'National safety standard certification for occupational health.' },
+];
+---
+
+<Layout title="The Legacy" headerVariant="dark">
+  <!-- Editorial Split Hero -->
+  <section class="min-h-[80vh] flex flex-col lg:flex-row bg-charcoal text-light overflow-hidden pt-36">
+    <div class="lg:w-1/2 p-8 md:p-24 lg:p-32 flex flex-col justify-center border-r border-white/5">
+      <div class="reveal-up">
+        <span class="label !text-accent">Our History</span>
+        <h1 class="editorial-title text-4xl sm:text-6xl md:text-7xl lg:text-[8.5rem] mb-12 leading-[0.85]" set:html={aboutData?.heroTitle || "Serving <br/>The <span class='italic text-accent'>GTA</span> <br/>Since <span class='text-accent'>'07</span>"} />
+        <p class="text-xl md:text-2xl text-light/50 leading-relaxed max-w-xl">
+          {aboutData?.heroSubtitle || "GioCrete Construction Ltd. was founded with a singular focus: to provide the highest level of expertise in Ontario's civil infrastructure sector."}
+        </p>
+      </div>
+    </div>
+    <div class="lg:w-1/2 relative bg-black flex items-center justify-center p-0 group">
+       <div class="absolute inset-0 bg-[url('/images/gta.png')] bg-cover bg-center opacity-80 mix-blend-screen grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:opacity-100"></div>
+       <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-1000"></div>
+    </div>
+  </section>
+
+  <!-- Credential Section (Asymmetric) -->
+  <section class="section bg-concrete border-b border-site-border">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+        <div class="lg:col-span-4 reveal-up">
+          <span class="label">Affiliations</span>
+          <h2 class="editorial-title text-5xl mb-8">Certified <br/>Excellence</h2>
+          <div class="h-[1px] w-24 bg-accent"></div>
+        </div>
+        <div class="lg:col-span-8 reveal-up">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {affiliations.map((item: any, idx: number) => (
+              <div class="pt-8 border-t border-site-border">
+                <span class="text-accent font-bold text-xs uppercase tracking-widest block mb-4">0{idx + 1}</span>
+                <h3 class="editorial-title text-2xl mb-4">{item.name}</h3>
+                <p class="text-muted leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Spread -->
+  <section class="section bg-white dark:bg-bg-dark overflow-hidden transition-colors duration-700">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+        <div class="lg:col-span-8 reveal-up">
+           <h4 class="label">The Work We Do</h4>
+           <div class="prose prose-2xl max-w-none editorial-title text-4xl md:text-6xl tracking-tight leading-[1.1] mb-16 text-charcoal dark:text-light" set:html={aboutData?.workTitle || "Precision in <span class='italic text-accent'>Underground Civil Operations.</span> Every pipe laid and every road paved is a commitment to the GTA’s resilience."} />
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-muted dark:text-light/60 text-lg leading-relaxed">
+              <p>
+                 {aboutData?.workText1 || "Specializing in sewer, watermain, and road reconstruction, we understand that our work is the lifeblood of the community. Nearly two decades later, GioCrete has become a trusted partner for municipalities across the Greater Toronto Area."}
+              </p>
+              <p>
+                 {aboutData?.workText2 || "Our unionized workforce is trained to handle the complexities of municipal-grade civil operations. From deep-trench excavations to high-precision utility alignments, GioCrete brings mechanical precision to every job site."}
+              </p>
+           </div>
+        </div>
+        <div class="lg:col-span-4 reveal-up">
+           <div class="aspect-[3/4] bg-bg-dark border border-site-border overflow-hidden rotate-2 lg:translate-y-24">
+              <img 
+                 src={aboutData?.workImage || "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800&auto=format&fit=crop"} 
+                 loading="lazy"
+                 decoding="async"
+                 width="800"
+                 height="1066"
+                 class="w-full h-full object-cover grayscale opacity-60 hover:grayscale-0 transition-all duration-1000" 
+                 alt="Site Work"
+              />
+           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team/Crew (Massive Cards) -->
+  <section class="section bg-bg-dark text-white">
+    <div class="container">
+      <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-24 reveal-up gap-8">
+        <div>
+          <span class="label !text-accent">Operations</span>
+          <h2 class="editorial-title text-5xl sm:text-6xl md:text-[8rem]">The Crew</h2>
+        </div>
+        <p class="max-w-xs text-white/40 uppercase tracking-widest text-[10px] leading-relaxed">
+          Seasoned project managers and veteran foremen leading the most skilled crew in the GTA's underground utility sector.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+        {team.map(item => (
+          <div class="bg-black/50 p-8 md:p-12 aspect-square flex flex-col justify-between border border-white/5 hover:bg-accent transition-all duration-500 group reveal-up">
+             <div>
+               <h4 class="editorial-title text-3xl mb-2">{item.name}</h4>
+               <span class="text-accent text-[10px] font-bold uppercase tracking-widest group-hover:text-black">{item.role}</span>
+             </div>
+             <p class="text-[10px] text-white/30 uppercase tracking-[0.2em] group-hover:text-black/60">GioCrete Professional Staff</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

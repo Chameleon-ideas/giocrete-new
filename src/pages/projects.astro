@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard';
+import { HoverButton } from '../components/HoverButton';
+import { client } from '../sanity/lib/client';
+import { projectsQuery } from '../sanity/lib/queries';
+
+const projects = await client.fetch(projectsQuery);
+---
+
+<Layout title="Operations Archive" headerVariant="dark">
+  <!-- Masonry Hero -->
+  <section class="min-h-[60vh] bg-bg-dark text-white pt-48 pb-24 overflow-hidden relative border-b border-white/5">
+     <!-- Massive background Text -->
+     <div class="absolute inset-0 pointer-events-none opacity-[0.03] select-none flex items-center justify-center">
+        <span class="text-[30vw] font-bold editorial-title whitespace-nowrap">GALLERY</span>
+     </div>
+
+     <div class="container relative z-10">
+        <div class="max-w-4xl reveal-up">
+           <span class="label !text-accent">Infrastructure Gallery</span>
+           <h1 class="editorial-title text-7xl md:text-9xl mb-12">Projects <br/><span class="text-accent italic">Overview</span></h1>
+           <p class="text-xl md:text-2xl text-white/50 leading-relaxed max-w-2xl">
+              A cumulative overview of our municipal operations across the Greater Toronto Area. Precision execution on every job site.
+           </p>
+        </div>
+     </div>
+  </section>
+
+  <!-- Gallery Filter/Stats Bar -->
+  <section class="bg-black py-8 border-b border-white/5">
+     <div class="container flex flex-wrap justify-between items-center gap-8 text-[10px] uppercase font-bold tracking-[0.3em] text-white/30">
+        <div class="flex items-center gap-4">
+           <span class="text-accent">●</span> Showing All Projects ({projects.length})
+        </div>
+        <div class="flex gap-12">
+           <span>Municipal</span>
+           <span>Civil</span>
+           <span>Industrial</span>
+        </div>
+     </div>
+  </section>
+
+  <!-- Project Grid (Strict Editorial Rhythm) -->
+  <section class="section bg-black">
+     <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-24 gap-x-12">
+           {projects.map((project, idx) => (
+              <div class={`reveal-up ${idx % 3 === 1 ? 'md:translate-y-24' : ''} ${idx % 3 === 2 ? 'md:translate-y-12' : ''}`}>
+                 <ProjectCard
+                    client:idle
+                    title={project.title}
+                    municipality={project.municipality || "GTA"}
+                    image={project.image}
+                    href={`/projects/${project.slug}`}
+                 />
+              </div>
+           ))}
+        </div>
+     </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="section bg-concrete">
+     <div class="container text-center reveal-up">
+        <h2 class="editorial-title text-5xl md:text-7xl mb-12">Scale Your <span class="italic text-accent">Infrastructure.</span></h2>
+        <a href="/contact" class="no-underline inline-block">
+          <HoverButton client:load variant="primary" className="!px-12 !py-4">
+            Inquire About Our Capabilities
+          </HoverButton>
+        </a>
+     </div>
+  </section>
+</Layout>

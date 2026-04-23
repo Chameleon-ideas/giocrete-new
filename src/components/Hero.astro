@@ -1,0 +1,97 @@
+---
+import { GridAnimation } from "./GridAnimation";
+import { HoverButton } from "./HoverButton";
+
+interface Props {
+  headline?: string;
+  subtext?: string;
+  image?: string;
+  ctaPrimary?: { label: string; href: string };
+  ctaSecondary?: { label: string; href: string };
+  badge?: string;
+}
+
+const { 
+  headline = "Building the Backbone of Toronto",
+  subtext = "GioCrete Construction delivers specialized civil infrastructure solutions with precision and safety at the core of every project.",
+  image, 
+  ctaPrimary, 
+  ctaSecondary, 
+  badge = "Established 2007"
+} = Astro.props;
+
+const imageUrl = image || "https://images.unsplash.com/photo-1541888946425-d81bb19480c5?q=80&w=2000&auto=format&fit=crop";
+---
+
+<section class="hero-editorial relative min-h-screen flex flex-col justify-center overflow-hidden bg-concrete transition-colors duration-700 py-20 pb-24 md:pb-32">
+
+  <!-- Background Layer (Subtle Image) -->
+  <div class="absolute inset-0 z-0 text-[#121212]">
+    <img 
+      src={imageUrl} 
+      alt="Hero Background" 
+      class="w-full h-full object-cover opacity-10 dark:opacity-30 scale-105"
+      id="hero-bg-img"
+    />
+  </div>
+
+  <!-- Atmospheric Grid Overlay -->
+  <div class="absolute inset-0 z-[5] opacity-60 dark:opacity-40">
+    <GridAnimation client:load spacing={60} strokeLength={15} strokeWidth={2} />
+  </div>
+
+  <!-- Content Layer -->
+  <div class="container relative z-[10] pt-24 md:pt-32 pointer-events-none">
+    <div class="max-w-6xl">
+      {badge && (
+        <span class="label text-accent mb-6 reveal-up pointer-events-auto">{badge}</span>
+      )}
+      
+      <h1 class="hero-headline editorial-title text-charcoal dark:text-light text-[clamp(3.5rem,11vw,8.5rem)] tracking-[-0.05em] mb-12 uppercase leading-[0.85]">
+        <span class="line-reveal block py-1">
+          <span class="dark:text-light">{headline.split(' ').slice(0, 2).join(' ')}</span>
+        </span>
+        <span class="line-reveal block text-accent italic py-1">
+          <span>{headline.split(' ').slice(2).join(' ')}</span>
+        </span>
+      </h1>
+
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end reveal-up pointer-events-auto">
+        <div class="md:col-span-7 lg:col-span-6">
+          <p class="text-xl md:text-2xl text-muted dark:text-light/60 leading-relaxed max-w-xl">
+            {subtext}
+          </p>
+        </div>
+        <div class="md:col-span-5 lg:col-span-6 flex flex-col sm:flex-row gap-6 md:justify-end items-center">
+          <a href={ctaPrimary?.href} class="no-underline">
+            <HoverButton client:load variant="primary" className="!py-4 !px-10 !text-[12px] font-bold uppercase tracking-widest font-display">
+              {ctaPrimary?.label}
+            </HoverButton>
+          </a>
+          <a href={ctaSecondary?.href} class="no-underline">
+            <HoverButton client:load variant="secondary" className="!py-4 !px-10 !text-[12px] font-bold uppercase tracking-widest font-display !text-current">
+              {ctaSecondary?.label}
+            </HoverButton>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-24 right-8 md:right-12 z-20 flex items-center gap-4 text-muted/80 dark:text-white/70 uppercase tracking-[0.3em] text-[10px] origin-right rotate-90">
+    <div class="w-12 h-[1px] bg-accent"></div>
+    <span>Scroll to Explore</span>
+  </div>
+</section>
+
+<script is:inline>
+  // Simple parallax for hero image
+  window.addEventListener('scroll', () => {
+    const img = document.getElementById('hero-bg-img');
+    if (!img) return;
+    const scrollPos = window.pageYOffset;
+    img.style.transform = `scale(1.05) translateY(${scrollPos * 0.1}px)`;
+  }, { passive: true });
+</script>
