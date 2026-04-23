@@ -11,6 +11,32 @@ export const settingsType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'logoNavbar',
+      title: 'Navbar Logo',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'logoFooter',
+      title: 'Footer Logo',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
+      name: 'navigation',
+      title: 'Navigation Links',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'label', type: 'string' },
+            { name: 'href', type: 'string' },
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: 'footerDescription',
       title: 'Footer Description',
       type: 'text',

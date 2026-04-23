@@ -21,6 +21,31 @@ export const homeType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'industrialSectionTitle',
+      title: 'Industrial Operations Section Title',
+      type: 'string',
+    }),
+    defineField({
+      name: 'industrialSectionDesc',
+      title: 'Industrial Operations Section Description',
+      type: 'text',
+    }),
+    defineField({
+      name: 'industrialSectionTagline',
+      title: 'Industrial Operations Section Tagline',
+      type: 'string',
+    }),
+    defineField({
+      name: 'recentSectionLabel',
+      title: 'Recent Operations Section Label',
+      type: 'string',
+    }),
+    defineField({
+      name: 'recentSectionTitle',
+      title: 'Recent Operations Section Title',
+      type: 'string',
+    }),
+    defineField({
       name: 'stats',
       title: 'Stats',
       type: 'array',

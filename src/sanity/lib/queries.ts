@@ -13,14 +13,33 @@ export const projectsQuery = groq`*[_type == "project"] | order(_createdAt desc)
   challenge
 }`
 
+export const servicesQuery = groq`*[_type == "service"] | order(_createdAt asc) {
+  title,
+  "slug": slug.current,
+  "image": image.asset->url,
+  shortDesc,
+  fullDesc,
+  features,
+  stats
+}`
+
 export const homeQuery = groq`*[_type == "home"][0] {
+  heroBadge,
   heroHeadline,
   heroSubtext,
+  ctaPrimaryLabel,
+  ctaSecondaryLabel,
   expertiseTitle,
+  industrialSectionTitle,
+  industrialSectionDesc,
+  industrialSectionTagline,
+  recentSectionLabel,
+  recentSectionTitle,
   stats,
   legacyTitle,
   legacyText,
-  "legacyImage": legacyImage.asset->url
+  "legacyImage": legacyImage.asset->url,
+  backgroundText
 }`
 
 export const safetyQuery = groq`*[_type == "safety"][0] {
@@ -33,6 +52,7 @@ export const safetyQuery = groq`*[_type == "safety"][0] {
 export const aboutQuery = groq`*[_type == "about"][0] {
   heroTitle,
   heroSubtitle,
+  "heroImage": heroImage.asset->url,
   affiliations,
   workTitle,
   workText1,
@@ -43,12 +63,15 @@ export const aboutQuery = groq`*[_type == "about"][0] {
 
 export const settingsQuery = groq`*[_type == "settings"][0] {
   siteName,
+  "logoNavbar": logoNavbar.asset->url,
+  "logoFooter": logoFooter.asset->url,
   footerDescription,
   email,
   phone,
   address,
   instagram,
-  linkedin
+  linkedin,
+  navigation
 }`
 
 export const careersQuery = groq`*[_type == "careers"][0] {

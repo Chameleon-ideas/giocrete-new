@@ -4,6 +4,9 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import Analytics from "@vercel/analytics/astro";
 
+import { client } from "../sanity/lib/client";
+import { settingsQuery } from "../sanity/lib/queries";
+
 interface Props {
   title?: string;
   description?: string;
@@ -12,6 +15,9 @@ interface Props {
 }
 
 const { title, description, ogImage, headerVariant = "dark" } = Astro.props;
+
+// Fetch Global Settings for Logo, Navigation, Footer, etc.
+const settings = await client.fetch(settingsQuery);
 
 const siteTitle = title ? `${title} | GioCrete` : "GioCrete";
 const siteDesc = description ?? "Toronto’s Premier Infrastructure Specialists.";
@@ -51,11 +57,11 @@ const siteDesc = description ?? "Toronto’s Premier Infrastructure Specialists.
   </head>
   <body class="antialiased selection:bg-accent selection:text-black">
     <div class="framed-layout">
-      <Navbar variant={headerVariant} />
+      <Navbar variant={headerVariant} settings={settings} />
       <main id="main-content">
         <slot />
       </main>
-      <Footer />
+      <Footer settings={settings} />
     </div>
 
     <!-- Page Transition Overlay -->

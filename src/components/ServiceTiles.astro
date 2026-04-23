@@ -1,5 +1,17 @@
 ---
-import { services } from '../data/services';
+interface Props {
+  services: any[];
+  title?: string;
+  description?: string;
+  tagline?: string;
+}
+
+const { 
+  services, 
+  title = "Industrial <br/><span class='text-accent italic'>Operations</span>",
+  description = "Precision execution in critical civil infrastructure. We handle the complexities of the GTA's underground assets.",
+  tagline = "Founded 2007 // Unionized Crew"
+} = Astro.props;
 ---
 
 <section class="section bg-white dark:bg-bg-dark transition-colors duration-700">
@@ -7,12 +19,12 @@ import { services } from '../data/services';
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
       <div class="lg:col-span-4 reveal-up">
         <span class="label">Specializations</span>
-        <h2 class="editorial-title text-5xl md:text-7xl mb-8 text-charcoal dark:text-light">Industrial <br/><span class="text-accent italic">Operations</span></h2>
+        <h2 class="editorial-title text-5xl md:text-7xl mb-8 text-charcoal dark:text-light" set:html={title} />
         <p class="text-lg text-muted dark:text-light/60 leading-relaxed mb-12 max-w-sm">
-          Precision execution in critical civil infrastructure. We handle the complexities of the GTA's underground assets.
+          {description}
         </p>
         <div class="hidden lg:block h-[1px] w-24 bg-accent/30"></div>
-        <p class="mt-8 text-[10px] font-bold uppercase tracking-[0.3em] text-muted/40 dark:text-white/20">Founded 2007 // Unionized Crew</p>
+        <p class="mt-8 text-[10px] font-bold uppercase tracking-[0.3em] text-muted/40 dark:text-white/20">{tagline}</p>
       </div>
 
       <div class="lg:col-span-8">

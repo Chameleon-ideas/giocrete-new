@@ -33,7 +33,10 @@ const affiliations = aboutData?.affiliations || [
       </div>
     </div>
     <div class="lg:w-1/2 relative bg-black flex items-center justify-center p-0 group">
-       <div class="absolute inset-0 bg-[url('/images/gta.png')] bg-cover bg-center opacity-80 mix-blend-screen grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:opacity-100"></div>
+       <div 
+        class="absolute inset-0 bg-cover bg-center opacity-80 mix-blend-screen grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:opacity-100"
+        style={`background-image: url(${aboutData?.heroImage || '/images/gta.png'})`}
+       ></div>
        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-1000"></div>
     </div>
   </section>

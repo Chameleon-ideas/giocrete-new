@@ -1,107 +1,171 @@
 ---
+import { HoverButton } from "./HoverButton";
+
 interface Props {
-  variant?: 'light' | 'dark';
+  variant?: "light" | "dark";
+  settings?: any;
 }
 
-const { variant = 'light' } = Astro.props;
+const { variant = "light", settings } = Astro.props;
 
-const pages = [
-  { label: 'Overview',  href: '/' },
-  { label: 'Specializations', href: '/services' },
-  { label: 'Operations', href: '/projects' },
-  { label: 'About',    href: '/about' },
-  { label: 'Safety',   href: '/safety' },
-  { label: 'Careers',  href: '/careers' },
+const defaultPages = [
+  { label: "Overview", href: "/" },
+  { label: "Specializations", href: "/services" },
+  { label: "Operations", href: "/projects" },
+  { label: "About", href: "/about" },
+  { label: "Safety", href: "/safety" },
+  { label: "Careers", href: "/careers" },
 ];
 
-const ctaLabel  = 'Contact Us';
-const ctaHref   = '/contact';
-import { HoverButton } from './HoverButton';
+const pages =
+  settings?.navigation && settings.navigation.length > 0
+    ? settings.navigation
+    : defaultPages;
+
+const ctaLabel = "Contact Us";
+const ctaHref = "/contact";
 ---
 
-<header class={`site-header transition-all duration-500 fixed top-0 left-0 right-0 z-[500] py-6 md:py-8 px-6 md:px-12 flex justify-between items-center group/header pointer-events-auto ${variant === 'dark' ? 'text-white' : 'text-black dark:text-white'} ${variant === 'light' ? 'site-header--light' : ''}`}>
-  
-  <!-- Logo (User Provided PNG) -->
+<header
+  class={`site-header transition-all duration-500 fixed top-0 left-0 right-0 z-[500] py-6 md:py-8 px-6 md:px-12 flex justify-between items-center group/header pointer-events-auto ${variant === "dark" ? "text-white" : "text-black dark:text-white"} ${variant === "light" ? "site-header--light" : ""}`}
+>
+  <!-- Logo -->
   <a href="/" class="nav-logo flex items-center group" aria-label="GioCrete">
-    <img 
-      src="/images/nav-logo.png" 
-      alt="GioCrete" 
-      class="h-14 md:h-20 w-auto object-contain transition-all duration-500 group-hover:scale-105"
+    <img
+      src={settings?.logoNavbar || "/images/nav-logo.png"}
+      alt={settings?.siteName || "GioCrete"}
+      class="h-10 md:h-12 w-auto object-contain transition-all duration-500 group-hover:scale-105"
       id="nav-logo-img"
     />
   </a>
 
-
-
   <!-- Desktop Nav -->
   <nav class="hidden lg:block">
     <ul class="flex gap-12 items-center">
-      {pages.map(page => (
-        <li>
-          <a 
-            href={page.href} 
-            aria-current={Astro.url.pathname === page.href ? 'page' : undefined}
-            class={`text-[12px] font-bold uppercase tracking-[0.2em] text-current hover:text-accent transition-colors relative group/link ${Astro.url.pathname === page.href ? 'text-accent' : ''}`}
-          >
-            {page.label}
-            <span class={`absolute -bottom-1 left-0 h-[1px] bg-accent transition-all duration-500 ${Astro.url.pathname === page.href ? 'w-full' : 'w-0 group-hover/link:w-full'}`}></span>
-          </a>
-        </li>
-      ))}
+      {
+        pages.map((page: any) => (
+          <li>
+            <a
+              href={page.href}
+              aria-current={
+                Astro.url.pathname === page.href ? "page" : undefined
+              }
+              class={`text-[12px] font-bold uppercase tracking-[0.2em] text-current hover:text-accent transition-colors relative group/link ${Astro.url.pathname === page.href ? "text-accent" : ""}`}
+            >
+              {page.label}
+              <span
+                class={`absolute -bottom-1 left-0 h-[1px] bg-accent transition-all duration-500 ${Astro.url.pathname === page.href ? "w-full" : "w-0 group-hover/link:w-full"}`}
+              />
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </nav>
 
-
   <!-- Actions -->
   <div class="flex items-center gap-8">
-     <!-- Theme Toggle -->
-     <button class="theme-toggle py-2 px-3 border border-current/10 hover:border-accent transition-colors rounded-full" aria-label="Toggle Theme">
-        <svg class="sun h-4 w-4 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-        <svg class="moon h-4 w-4 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-     </button>
+    <!-- Theme Toggle -->
+    <button
+      class="theme-toggle py-2 px-3 border border-current/10 hover:border-accent transition-colors rounded-full"
+      aria-label="Toggle Theme"
+    >
+      <svg
+        class="sun h-4 w-4 hidden dark:block"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        ></path></svg
+      >
+      <svg
+        class="moon h-4 w-4 block dark:hidden"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        ></path></svg
+      >
+    </button>
 
-     <a href={ctaHref} class="hidden sm:flex no-underline">
-        <HoverButton 
-          client:load 
-          className="!py-2 !px-6 !text-[12px] font-bold uppercase tracking-widest font-display !text-current"
-        >
-          {ctaLabel}
-        </HoverButton>
-     </a>
+    <a href={ctaHref} class="hidden sm:flex no-underline">
+      <HoverButton
+        client:load
+        className="!py-2 !px-6 !text-[12px] font-bold uppercase tracking-widest font-display !text-current"
+      >
+        {ctaLabel}
+      </HoverButton>
+    </a>
 
-     <!-- Mobile Hamburger -->
-     <button class="hamburger flex lg:hidden flex-col gap-1.5 w-6 h-6 justify-center" aria-label="Open Menu">
-        <span class="w-full h-0.5 bg-current"></span>
-        <span class="w-full h-0.5 bg-current"></span>
-     </button>
+    <!-- Mobile Hamburger -->
+    <button
+      class="hamburger flex lg:hidden flex-col gap-1.5 w-6 h-6 justify-center"
+      aria-label="Open Menu"
+    >
+      <span class="w-full h-0.5 bg-current"></span>
+      <span class="w-full h-0.5 bg-current"></span>
+    </button>
   </div>
 </header>
 
 <!-- Mobile Menu Overlay -->
-<div id="mobile-menu" class="fixed inset-0 z-[600] bg-black flex flex-col p-8 md:p-12 box-border">
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[600] bg-black flex flex-col p-8 md:p-12 box-border"
+>
   <div class="flex justify-between items-center mb-16">
-    <img src="/images/nav-logo.png" alt="GioCrete" class="h-12 w-auto brightness-0 invert" />
-    <button id="close-menu" class="text-white text-4xl leading-none" aria-label="Close Menu">&times;</button>
+    <img
+      src={settings?.logo || "/images/nav-logo.png"}
+      alt={settings?.siteName || "GioCrete"}
+      class="h-12 w-auto brightness-0 invert"
+    />
+    <button
+      id="close-menu"
+      class="text-white text-4xl leading-none"
+      aria-label="Close Menu">&times;</button
+    >
   </div>
-  
+
   <nav class="flex-1 flex flex-col justify-center">
     <ul class="space-y-8">
-      {pages.map((page, idx) => (
-        <li class="mobile-nav-item opacity-0 translate-y-8 transition-all duration-500" style={`transition-delay: ${idx * 100}ms`}>
-          <a href={page.href} class="editorial-title text-4xl sm:text-5xl text-white hover:text-accent transition-colors block leading-none">
-            {page.label}
-          </a>
-        </li>
-      ))}
+      {
+        pages.map((page: any, idx: number) => (
+          <li
+            class="mobile-nav-item opacity-0 translate-y-8 transition-all duration-500"
+            style={`transition-delay: ${idx * 100}ms`}
+          >
+            <a
+              href={page.href}
+              class="editorial-title text-4xl sm:text-5xl text-white hover:text-accent transition-colors block leading-none"
+            >
+              {page.label}
+            </a>
+          </li>
+        ))
+      }
     </ul>
-    
-    <div class="mt-16 pt-12 border-t border-white/10 mobile-nav-item opacity-0 translate-y-8 transition-all duration-500" style="transition-delay: 600ms">
-       <span class="text-[10px] uppercase tracking-[0.3em] text-white/40 block mb-6">Operations HQ</span>
-       <a href="/contact" class="no-underline block">
-         <HoverButton client:load variant="primary" className="w-full !py-6">
-           {ctaLabel}
-         </HoverButton>
-       </a>
+
+    <div
+      class="mt-16 pt-12 border-t border-white/10 mobile-nav-item opacity-0 translate-y-8 transition-all duration-500"
+      style="transition-delay: 600ms"
+    >
+      <span
+        class="text-[10px] uppercase tracking-[0.3em] text-white/40 block mb-6"
+        >Operations HQ</span
+      >
+      <a href="/contact" class="no-underline block">
+        <HoverButton client:load variant="primary" className="w-full !py-6">
+          {ctaLabel}
+        </HoverButton>
+      </a>
     </div>
   </nav>
 </div>
@@ -120,7 +184,10 @@ import { HoverButton } from './HoverButton';
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
-    transition: transform 0.7s var(--ease-editorial), opacity 0.5s ease, visibility 0.7s;
+    transition:
+      transform 0.7s var(--ease-editorial),
+      opacity 0.5s ease,
+      visibility 0.7s;
   }
 
   #mobile-menu.open {
@@ -129,59 +196,49 @@ import { HoverButton } from './HoverButton';
     visibility: visible;
     opacity: 1;
   }
-  
+
   #mobile-menu.open .mobile-nav-item {
     opacity: 1;
     transform: translateY(0);
   }
-  
-  :global([data-theme='dark']) .site-header.scrolled {
+
+  :global([data-theme="dark"]) .site-header.scrolled {
     background-color: rgba(18, 18, 18, 0.9);
     color: white !important;
   }
 
-  /* Logo Inversion Logic */
-  .site-header.scrolled #nav-logo-img {
-    filter: brightness(0);
-  }
-  
-  :global([data-theme='dark']) .site-header.scrolled #nav-logo-img {
-    filter: brightness(0) invert(1);
-  }
-
   /* Handle white hero state (variant='light') logo color when NOT scrolled */
-  .site-header--light:not(.scrolled) #nav-logo-img {
-    filter: brightness(0);
-  }
-  
-  :global([data-theme='dark']) .site-header--light:not(.scrolled) #nav-logo-img {
-    filter: brightness(0) invert(1);
-  }
 </style>
-
 
 <script is:inline>
   const toggleMobileMenu = (open) => {
-    const menu = document.getElementById('mobile-menu');
+    const menu = document.getElementById("mobile-menu");
     if (menu) {
-      menu.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+      menu.classList.toggle("open", open);
+      document.body.style.overflow = open ? "hidden" : "";
     }
   };
 
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('.hamburger')) {
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".hamburger")) {
       toggleMobileMenu(true);
-    } else if (e.target.closest('#close-menu') || e.target.closest('#mobile-menu a')) {
+    } else if (
+      e.target.closest("#close-menu") ||
+      e.target.closest("#mobile-menu a")
+    ) {
       toggleMobileMenu(false);
     }
   });
 
   // Handle Scroll
-  const header = document.querySelector('.site-header');
+  const header = document.querySelector(".site-header");
   if (header) {
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 50);
-    }, { passive: true });
+    window.addEventListener(
+      "scroll",
+      () => {
+        header.classList.toggle("scrolled", window.scrollY > 50);
+      },
+      { passive: true },
+    );
   }
 </script>

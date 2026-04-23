@@ -2,7 +2,14 @@
 import { client } from '../sanity/lib/client';
 import { settingsQuery } from '../sanity/lib/queries';
 
-const settings = await client.fetch(settingsQuery);
+interface Props {
+  settings?: any;
+}
+
+const { settings: propsSettings } = Astro.props;
+
+// Use settings from props if available, otherwise fetch
+const settings = propsSettings || await client.fetch(settingsQuery);
 
 const siteName = settings?.siteName || 'GioCrete Construction';
 const currentYear = new Date().getFullYear();
@@ -21,9 +28,9 @@ const currentYear = new Date().getFullYear();
       <div class="lg:col-span-4">
         <a href="/" class="flex items-center mb-10 group" aria-label="GioCrete">
           <img 
-            src="/images/footer-logo.png" 
+            src={settings?.logoFooter || "/images/footer-logo.png"} 
             alt="GioCrete" 
-            class="h-24 w-auto object-contain transition-all duration-700 brightness-0 invert opacity-60 group-hover:opacity-100 group-hover:scale-105" 
+            class="h-24 w-auto object-contain transition-all duration-700 group-hover:scale-105" 
           />
         </a>
 
@@ -41,7 +48,7 @@ const currentYear = new Date().getFullYear();
       <div class="lg:col-span-2">
         <span class="label !text-white/40 mb-8">Navigation</span>
         <ul class="space-y-4">
-          {[{ label: 'Overview', href: '/' }, { label: 'Specializations', href: '/services' }, { label: 'Operations', href: '/projects' }, { label: 'About', href: '/about' }, { label: 'Careers', href: '/careers' }].map(item => (
+          {(settings?.navigation && settings.navigation.length > 0 ? settings.navigation : [{ label: 'Overview', href: '/' }, { label: 'Specializations', href: '/services' }, { label: 'Operations', href: '/projects' }, { label: 'About', href: '/about' }, { label: 'Careers', href: '/careers' }]).map((item: any) => (
             <li><a href={item.href} class="text-sm font-bold uppercase tracking-widest hover:text-accent transition-colors">{item.label}</a></li>
           ))}
         </ul>

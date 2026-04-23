@@ -16,6 +16,12 @@ export const aboutType = defineType({
       type: 'text',
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Hero Background Image',
+      type: 'image',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'affiliations',
       title: 'Affiliations',
       type: 'array',
