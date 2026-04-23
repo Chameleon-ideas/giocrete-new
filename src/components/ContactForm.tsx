@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import * as React from 'react';
 import { motion } from 'framer-motion';
 import { HoverButton } from './HoverButton';
 
 import { BorderRotate } from './BorderRotate';
 
 export default function ContactForm({ confirmationMessage }: { confirmationMessage?: string }) {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

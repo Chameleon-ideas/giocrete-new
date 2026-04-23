@@ -1,9 +1,9 @@
-import React, { CSSProperties, ReactNode, HTMLAttributes } from 'react';
+import * as React from 'react';
 
 type AnimationMode = 'auto-rotate' | 'rotate-on-hover' | 'stop-rotate-on-hover';
 
-interface BorderRotateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className'> {
-  children: ReactNode;
+interface BorderRotateProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'className'> {
+  children: React.ReactNode;
   className?: string;
  
   // Animation customization
@@ -23,7 +23,7 @@ interface BorderRotateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'classN
   borderRadius?: number;
  
   // Container styling
-  style?: CSSProperties;
+  style?: React.CSSProperties;
 }
 
 const defaultGradientColors = {
@@ -58,7 +58,7 @@ const BorderRotate: React.FC<BorderRotateProps> = ({
     }
   };
  
-  const combinedStyle: CSSProperties = {
+  const combinedStyle: React.CSSProperties = {
     '--gradient-primary': gradientColors.primary,
     '--gradient-secondary': gradientColors.secondary,
     '--gradient-accent': gradientColors.accent,
@@ -87,7 +87,7 @@ const BorderRotate: React.FC<BorderRotateProps> = ({
     backgroundClip: 'padding-box, border-box',
     backgroundOrigin: 'padding-box, border-box',
     ...style,
-  } as CSSProperties;
+  } as React.CSSProperties;
  
   return (
     <div
