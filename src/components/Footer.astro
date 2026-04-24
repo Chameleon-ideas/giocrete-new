@@ -18,7 +18,7 @@ const currentYear = new Date().getFullYear();
 <footer class="bg-black text-white py-24 mt-auto relative overflow-hidden">
   <!-- Subtle Industrial Background -->
   <div class="absolute inset-0 opacity-5 pointer-events-none select-none flex items-center justify-center">
-     <span class="text-[30vw] font-bold editorial-title whitespace-nowrap">GIOCRETE</span>
+     <span class="text-[clamp(10rem,30vw,30rem)] font-bold editorial-title whitespace-nowrap">GIOCRETE</span>
   </div>
 
   <div class="container relative z-10">
@@ -67,8 +67,8 @@ const currentYear = new Date().getFullYear();
       <!-- Contact Column -->
       <div class="lg:col-span-4 lg:text-right">
         <span class="label !text-white/40 mb-8">General Inquiries</span>
-        <a href={`mailto:${settings?.email || "office@giocrete.com"}`} class="editorial-title text-3xl md:text-4xl block mb-4 hover:text-accent transition-colors">{settings?.email || "office@giocrete.com"}</a>
-        <a href={`tel:${(settings?.phone || "4167434100").replace(/\D/g, '')}`} class="editorial-title text-3xl md:text-4xl block mb-12 hover:text-accent transition-colors">{settings?.phone || "+1 416 743 4100"}</a>
+        <a href={`mailto:${settings?.email || "office@giocrete.com"}`} class="editorial-title text-xl sm:text-2xl md:text-4xl block mb-4 hover:text-accent transition-colors break-all">{settings?.email || "office@giocrete.com"}</a>
+        <a href={`tel:${(settings?.phone || "4167434100").replace(/\D/g, '')}`} class="editorial-title text-2xl sm:text-3xl md:text-4xl block mb-12 hover:text-accent transition-colors">{settings?.phone || "+1 416 743 4100"}</a>
         <p class="text-white/40 text-sm uppercase tracking-widest" set:html={(settings?.address || "101 Kenhar Drive, <br/>North York, ON, M9L 1N5").replace(", ", ", <br/>")} />
       </div>
     </div>

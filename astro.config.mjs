@@ -9,12 +9,6 @@ export default defineConfig({
   adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      exclude: ['react', 'react-dom'],
-    },
-    ssr: {
-      noExternal: ['react', 'react-dom'],
-    },
   },
   integrations: [
     react(),

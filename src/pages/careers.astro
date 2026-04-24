@@ -18,15 +18,15 @@ const roles = careers?.roles || ['Labourer', 'Operator', 'Foreman', 'Project Man
 
 <Layout title="Join the Crew" headerVariant="dark">
   <!-- Hero Section -->
-  <section class="min-h-[80vh] flex flex-col justify-center bg-black text-white p-12 md:p-24 lg:p-32 relative overflow-hidden">
+  <section class="min-h-[80vh] flex flex-col justify-center bg-black text-white p-6 md:p-24 lg:p-32 relative overflow-hidden">
      <!-- Massive background Text -->
      <div class="absolute inset-0 opacity-10 pointer-events-none select-none flex items-center justify-center">
-        <span class="text-[30vw] font-bold editorial-title whitespace-nowrap">CAREERS</span>
+        <span class="text-[clamp(10rem,30vw,30rem)] font-bold editorial-title whitespace-nowrap">CAREERS</span>
      </div>
      
      <div class="relative z-10 max-w-6xl reveal-up">
         <span class="label !text-accent">Work At GioCrete</span>
-        <h1 class="editorial-title text-7xl md:text-9xl lg:text-[12rem] mb-12" set:html={careers?.heroTitle || "Building <br/><span class='text-accent italic'>Toronto</span>"} />
+        <h1 class="editorial-title text-5xl md:text-9xl lg:text-[12rem] mb-12" set:html={careers?.heroTitle || "Building <br/><span class='text-accent italic'>Toronto</span>"} />
         <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
            <div class="md:col-span-8">
               <p class="text-2xl text-white/50 max-w-2xl leading-relaxed">
@@ -49,7 +49,7 @@ const roles = careers?.roles || ['Labourer', 'Operator', 'Foreman', 'Project Man
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
            
            <div class="lg:col-span-4 reveal-up">
-              <h2 class="editorial-title text-5xl md:text-7xl mb-12 text-charcoal dark:text-light" set:html={careers?.reasonsTitle || "The GioCrete <br/><span class='text-accent italic'>Advantage.</span>"} />
+              <h2 class="editorial-title text-4xl md:text-7xl mb-12 text-charcoal dark:text-light" set:html={careers?.reasonsTitle || "The GioCrete <br/><span class='text-accent italic'>Advantage.</span>"} />
               <p class="text-muted dark:text-light/60 leading-relaxed">
                  Join a team where expertise is valued and career growth is standard.
               </p>
@@ -77,12 +77,12 @@ const roles = careers?.roles || ['Labourer', 'Operator', 'Foreman', 'Project Man
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
            <div class="lg:col-span-6 reveal-up">
               <span class="label !text-accent">Direct Application</span>
-              <h3 class="editorial-title text-5xl md:text-8xl mb-12" set:html={careers?.ctaHeading || "Join the <br/><span class='italic text-accent'>Operations</span>"} />
+              <h3 class="editorial-title text-4xl md:text-8xl mb-12" set:html={careers?.ctaHeading || "Join the <br/><span class='italic text-accent'>Operations</span>"} />
               
               <div class="space-y-6 mb-12">
                  {roles.map((role: string) => (
                     <div class="flex items-center justify-between py-6 border-b border-white/10 group">
-                       <span class="editorial-title text-3xl group-hover:text-accent transition-colors">{role}</span>
+                       <span class="editorial-title text-2xl sm:text-3xl group-hover:text-accent transition-colors">{role}</span>
                        <span class="text-[10px] font-bold uppercase tracking-widest text-white/30 border border-white/10 px-4 py-2">Full-Time</span>
                     </div>
                  ))}

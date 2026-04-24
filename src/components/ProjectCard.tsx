@@ -41,13 +41,13 @@ const ProjectCard: React.FC<Props> = ({ title, municipality, image, scope, href 
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-70 group-hover:opacity-85 transition-opacity duration-500" />
 
       {/* Static Info (Bottom) */}
-      <div className="absolute bottom-10 left-10 right-10 text-[#F5F5F0] z-10">
-         <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#FF9F1C] block mb-2">{municipality}</span>
-         <h4 className="text-3xl font-bold uppercase tracking-[-0.02em] leading-[0.9] editorial-title group-hover:text-[#FF9F1C] transition-colors duration-300 drop-shadow-md">
+      <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 text-[#F5F5F0] z-10">
+         <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#E96221] block mb-2">{municipality}</span>
+         <h4 className="text-2xl md:text-3xl font-bold uppercase tracking-[-0.02em] leading-[0.9] editorial-title group-hover:text-[#E96221] transition-colors duration-300 drop-shadow-md">
            {title}
          </h4>
          
-         <div className="h-[1px] w-0 bg-[#FF9F1C] mt-6 group-hover:w-full transition-all duration-700 shadow-[0_0_15px_rgba(255,159,28,0.3)]" />
+         <div className="h-[1px] w-0 bg-[#E96221] mt-6 group-hover:w-full transition-all duration-700 shadow-[0_0_15px_rgba(233,98,33,0.3)]" />
          
          {scope && (
            <p className="text-[10px] font-medium uppercase tracking-widest text-[#F5F5F0]/40 mt-4 h-0 overflow-hidden group-hover:h-auto transition-all duration-500">
@@ -57,7 +57,7 @@ const ProjectCard: React.FC<Props> = ({ title, municipality, image, scope, href 
       </div>
 
       {/* Decorative Arrow */}
-      <div className="absolute top-10 right-10 text-[#FF9F1C] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div className="absolute top-10 right-10 text-[#E96221] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M7 17L17 7M17 7H7M17 7V17" />
         </svg>

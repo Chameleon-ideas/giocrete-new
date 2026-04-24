@@ -25,14 +25,14 @@ const protocols = safetyData?.protocols || [
   <!-- Hero Section (Deep Industrial) -->
   <section class="min-h-[70vh] bg-bg-dark text-white pt-48 pb-24 overflow-hidden relative">
      <div class="absolute inset-0 opacity-10 pointer-events-none select-none flex items-center justify-center">
-        <span class="text-[30vw] font-bold editorial-title whitespace-nowrap">SAFETY</span>
+        <span class="text-[clamp(10rem,30vw,30rem)] font-bold editorial-title whitespace-nowrap">SAFETY</span>
      </div>
      
      <div class="container relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-end">
            <div class="lg:col-span-8 reveal-up">
               <span class="label !text-accent">Our Highest Priority</span>
-              <h1 class="editorial-title text-7xl md:text-9xl mb-12" set:html={title} />
+              <h1 class="editorial-title text-5xl md:text-9xl mb-12" set:html={title} />
               <p class="text-xl md:text-2xl text-white/50 leading-relaxed max-w-2xl">
                  {subtitle}
               </p>
@@ -68,7 +68,7 @@ const protocols = safetyData?.protocols || [
            
            <div class="lg:col-span-4 reveal-up">
               <span class="label">Site Standards</span>
-              <h2 class="editorial-title text-5xl md:text-7xl mb-12 text-charcoal dark:text-light">Work-Site <br/><span class="text-accent italic">Protocols</span></h2>
+              <h2 class="editorial-title text-3xl md:text-7xl mb-12 text-charcoal dark:text-light">Work-Site <br/><span class="text-accent italic">Protocols</span></h2>
               <div class="h-[1px] w-full bg-border dark:bg-white/10 mb-12"></div>
               <p class="text-muted dark:text-light/60 leading-relaxed uppercase tracking-wide text-xs">
                  Mandatory daily safety briefings before any machinery is operated on a GioCrete job site.
@@ -80,7 +80,7 @@ const protocols = safetyData?.protocols || [
                  {protocols.map((protocol: any, idx: number) => (
                     <div>
                        <span class="text-accent editorial-title text-5xl block mb-6 opacity-20">0{idx + 1}</span>
-                       <h3 class="editorial-title text-3xl mb-6 text-charcoal dark:text-light">{protocol.title}</h3>
+                       <h3 class="editorial-title text-2xl md:text-3xl mb-6 text-charcoal dark:text-light">{protocol.title}</h3>
                        <p class="text-lg text-muted dark:text-light/60 leading-relaxed">{protocol.description}</p>
                     </div>
                  ))}

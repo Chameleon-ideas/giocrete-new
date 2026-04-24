@@ -24,15 +24,14 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
     const createCircle = React.useCallback((x: number, y: number) => {
       const buttonWidth = buttonRef.current?.offsetWidth || 0
       const xPos = x / buttonWidth
-      
+
       // For primary variant, we use white/light circles for contrast
       // For secondary, we use brand orange
       const startColor = variant === 'primary' ? 'rgba(255,255,255,0.4)' : 'var(--circle-start)'
       const endColor = variant === 'primary' ? 'rgba(255,255,255,0.1)' : 'var(--circle-end)'
 
-      const color = `linear-gradient(to right, ${startColor} ${xPos * 100}%, ${endColor} ${
-        xPos * 100
-      }%)`
+      const color = `linear-gradient(to right, ${startColor} ${xPos * 100}%, ${endColor} ${xPos * 100
+        }%)`
 
       setCircles((prev) => [
         ...prev,
@@ -43,7 +42,7 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
     const handlePointerMove = React.useCallback(
       (event: React.PointerEvent<HTMLButtonElement>) => {
         if (!isListening) return
-        
+
         const currentTime = Date.now()
         if (currentTime - lastAddedRef.current > 100) {
           lastAddedRef.current = currentTime
@@ -95,9 +94,9 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
         ref={buttonRef}
         className={cn(
           "relative isolate px-8 py-3 rounded-full overflow-hidden transition-all duration-300",
-          variant === 'primary' 
-            ? "bg-accent text-charcoal border-none font-bold shadow-lg hover:shadow-accent/40" 
-            : "backdrop-blur-lg bg-[rgba(255,159,28,0.05)] border border-accent/20 hover:bg-[rgba(255,159,28,0.1)]",
+          variant === 'primary'
+            ? "bg-accent text-charcoal border-none font-bold shadow-lg hover:shadow-accent/40"
+            : "backdrop-blur-lg bg-[rgba(233,98,33,0.05)] border border-accent/20 hover:bg-[rgba(233,98,33,0.1)]",
           "cursor-pointer leading-6 uppercase tracking-widest font-bold text-[12px]",
           className
         )}
@@ -106,8 +105,8 @@ const HoverButton = React.forwardRef<HTMLButtonElement, HoverButtonProps>(
         onPointerLeave={handlePointerLeave}
         {...props}
         style={{
-          "--circle-start": "#FF9F1C",
-          "--circle-end": "#E68A00",
+          "--circle-start": "#E96221",
+          "--circle-end": "#D15318",
         } as React.CSSProperties}
       >
         {circles.map(({ id, x, y, color, fadeState }) => (

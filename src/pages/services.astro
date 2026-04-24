@@ -6,7 +6,7 @@ import { services } from '../data/services';
 
 <Layout title="Specializations" headerVariant="dark">
   <!-- Hero Section (Massive Impact) -->
-  <section class="min-h-[70vh] flex flex-col justify-end bg-black text-white p-12 md:p-24 lg:p-32 relative overflow-hidden">
+  <section class="min-h-[70vh] flex flex-col justify-end bg-black text-white p-6 md:p-24 lg:p-32 relative overflow-hidden">
      <!-- Abstract machinery bg -->
      <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
@@ -15,7 +15,7 @@ import { services } from '../data/services';
 
      <div class="relative z-10 max-w-6xl reveal-up">
         <span class="label">Expertise</span>
-        <h1 class="editorial-title text-7xl md:text-9xl lg:text-[12rem] mb-12">
+        <h1 class="editorial-title text-5xl md:text-9xl lg:text-[12rem] mb-12">
            Operations <br/><span class="text-accent italic">Industrial</span>
         </h1>
         <p class="text-2xl text-white/50 max-w-2xl leading-relaxed">
@@ -28,7 +28,7 @@ import { services } from '../data/services';
   <section class="bg-concrete">
      {services.map((service, idx) => (
         <article class="border-b border-site-border">
-           <div class="container py-24 md:py-32">
+           <div class="container py-16 md:py-32">
               <div class={`grid grid-cols-1 lg:grid-cols-12 gap-16 items-center ${idx % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
                  
                  <!-- Visual Block (7 Columns) -->
@@ -50,8 +50,8 @@ import { services } from '../data/services';
 
                  <!-- Information Block (5 Columns) -->
                  <div class={`lg:col-span-5 reveal-up ${idx % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                    <span class="text-accent editorial-title text-6xl md:text-8xl block mb-8 opacity-20">0{idx + 1}</span>
-                    <h2 class="editorial-title text-5xl md:text-6xl mb-8">{service.title}</h2>
+                    <span class="text-accent editorial-title text-4xl md:text-8xl block mb-8 opacity-20">0{idx + 1}</span>
+                    <h2 class="editorial-title text-3xl md:text-6xl mb-8">{service.title}</h2>
                     <p class="text-lg md:text-xl text-muted leading-relaxed mb-12">
                        {service.description}
                     </p>
@@ -84,7 +84,7 @@ import { services } from '../data/services';
   <section class="section bg-black text-white py-32 text-center overflow-hidden relative">
      <div class="container relative z-10 reveal-up">
         <span class="label !text-accent">Partner with us</span>
-        <h3 class="editorial-title text-5xl md:text-8xl mb-12">Building the city's <br/><span class="italic text-accent">Critical Assets</span>.</h3>
+        <h3 class="editorial-title text-4xl md:text-8xl mb-12">Building the city's <br/><span class="italic text-accent">Critical Assets</span>.</h3>
         <a href="/contact" class="no-underline inline-block">
           <HoverButton client:load variant="primary" className="!px-16 !py-6 !text-lg">
             Inquire Now

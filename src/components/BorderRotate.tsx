@@ -28,8 +28,8 @@ interface BorderRotateProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
 
 const defaultGradientColors = {
   primary: '#584827',
-  secondary: '#FF9F1C', // Using GioCrete accent
-  accent: '#FF9F1C'
+  secondary: '#E96221', // Using GioCrete accent
+  accent: '#E96221'
 };
 
 const BorderRotate: React.FC<BorderRotateProps> = ({

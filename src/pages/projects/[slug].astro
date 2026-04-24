@@ -32,10 +32,10 @@ const { project } = Astro.props;
     <div class="container relative z-10 pb-20">
       <div class="max-w-4xl reveal-up">
         <span class="label text-accent mb-6 block">Project Case Study</span>
-        <h1 class="editorial-title text-6xl md:text-8xl text-white mb-8 uppercase tracking-tighter leading-[0.85]">
+        <h1 class="editorial-title text-4xl md:text-8xl text-white mb-8 uppercase tracking-tighter leading-[0.85]">
           {project.title}
         </h1>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12">
           <div>
             <span class="text-[10px] uppercase tracking-widest text-white/50 block mb-2">Client</span>
             <span class="text-sm font-semibold text-white tracking-tight">{project.client}</span>
@@ -64,7 +64,7 @@ const { project } = Astro.props;
         <!-- Overview -->
         <div class="lg:col-span-12 reveal-up">
           <span class="label">Project Overview</span>
-          <p class="text-2xl md:text-3xl text-charcoal dark:text-light leading-relaxed mb-20 max-w-5xl">
+          <p class="text-xl md:text-3xl text-charcoal dark:text-light leading-relaxed mb-12 md:mb-20 max-w-5xl">
             {project.overview}
           </p>
         </div>
@@ -92,7 +92,7 @@ const { project } = Astro.props;
 
         <!-- Sidebar / Metadata -->
         <div class="lg:col-span-4 reveal-up">
-            <div class="sticky top-32 space-y-12 bg-white dark:bg-black/20 p-8 md:p-12 border border-site-border dark:border-white/10 shadow-sm">
+            <div class="sticky top-32 space-y-12 bg-white dark:bg-black/20 p-6 md:p-12 border border-site-border dark:border-white/10 shadow-sm">
                 <div>
                     <span class="text-[10px] font-bold text-accent uppercase tracking-widest block mb-4">Operations Type</span>
                     <p class="text-sm text-charcoal dark:text-light font-semibold uppercase tracking-wider">{project.type}</p>
