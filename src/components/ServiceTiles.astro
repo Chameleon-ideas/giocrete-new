@@ -12,6 +12,16 @@ const {
   description = "Precision execution in critical civil infrastructure. We handle the complexities of the GTA's underground assets.",
   tagline = "Founded 2007 // Unionized Crew",
 } = Astro.props;
+
+// Fallback images keyed by slug — used when CMS image is missing
+const FALLBACK_IMAGES: Record<string, string> = {
+  "sewer-systems":       "/images/sewer-systems.png",
+  "watermain-replacement": "/images/watermain.png",
+  "road-reconstruction": "/images/road-reconstruction.png",
+};
+
+const resolveImage = (service: any) =>
+  service.image || FALLBACK_IMAGES[service.slug] || "/images/random.png";
 ---
 
 <section
@@ -48,7 +58,7 @@ const {
               >
                 <div class="aspect-[21/9] md:aspect-[24/8] overflow-hidden">
                   <img
-                    src={service.image}
+                    src={resolveImage(service)}
                     alt={service.title}
                     loading="lazy"
                     decoding="async"

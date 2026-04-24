@@ -12,9 +12,57 @@ const homeData = await client.fetch(homeQuery);
 const cmsProjects = await client.fetch(projectsQuery);
 const cmsServices = await client.fetch(servicesQuery);
 
+const FALLBACK_PROJECTS = [
+  {
+    title: "Industrial Storm Outfall",
+    municipality: "Peel Region",
+    image: "/images/industrial-storm.png",
+    slug: "industrial-storm-outfall",
+  },
+  {
+    title: "TTC Track Bed Reconstruction",
+    municipality: "Cormorant Sector",
+    image: "/images/track bed.png",
+    slug: "ttc-track-bed-reconstruction",
+  },
+  {
+    title: "High-Density Watermain Relay",
+    municipality: "Vaughan",
+    image: "/images/high-density.png",
+    slug: "high-density-watermain-relay",
+  },
+];
+
+const FALLBACK_SERVICES = [
+  {
+    title: "Sewer Systems",
+    slug: "sewer-systems",
+    image: "/images/sewer-systems.png",
+    shortDesc:
+      "Precision installation and maintenance of municipal sanitary and storm sewer infrastructure.",
+  },
+  {
+    title: "Watermain Replacement",
+    slug: "watermain-replacement",
+    image: "/images/watermain.png",
+    shortDesc:
+      "Specialized expertise in water distribution systems, ensuring city-wide access to clean water.",
+  },
+  {
+    title: "Road Reconstruction",
+    slug: "road-reconstruction",
+    image: "/images/road-reconstruction.png",
+    shortDesc:
+      "Complete reconstruction of municipal roadways, from grading to paving and curbs.",
+  },
+];
+
 const portfolioItems =
-  cmsProjects && cmsProjects.length > 0 ? cmsProjects.slice(0, 3) : [];
-const services = cmsServices && cmsServices.length > 0 ? cmsServices : [];
+  cmsProjects && cmsProjects.length > 0
+    ? cmsProjects.slice(0, 3)
+    : FALLBACK_PROJECTS;
+const services =
+  cmsServices && cmsServices.length > 0 ? cmsServices : FALLBACK_SERVICES;
 
 const headline =
   homeData?.heroHeadline || "Critical Foundation. Precision Execution.";

@@ -9,7 +9,25 @@ interface Props {
   href: string;
 }
 
+const FALLBACK_POOL = [
+  "/images/recent-ops1.png",
+  "/images/recent-ops2.png",
+  "/images/recent-ops3.png",
+  "/images/recent-ops4.png",
+  "/images/recent-ops5.png",
+  "/images/random.png",
+];
+
+// Hash the title to a stable index so the same card always picks the same image
+const hashTitle = (str: string) => {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) & 0xffff;
+  return h;
+};
+
 const ProjectCard: React.FC<Props> = ({ title, municipality, image, scope, href }) => {
+  const resolvedImage = image || FALLBACK_POOL[hashTitle(title) % FALLBACK_POOL.length];
+
   return (
     <motion.a 
       href={href}
@@ -19,24 +37,17 @@ const ProjectCard: React.FC<Props> = ({ title, municipality, image, scope, href 
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
     >
-      {image ? (
-        <img 
-          src={image} 
-          alt={title} 
-          loading="lazy"
-          decoding="async"
-          width={800}
-          height={1000}
-          className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0"
-        />
+      <img 
+        src={resolvedImage} 
+        alt={title} 
+        loading="lazy"
+        decoding="async"
+        width={800}
+        height={1000}
+        className="absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100 grayscale group-hover:grayscale-0"
+      />
 
-      ) : (
-        <div className="absolute inset-0 flex items-center justify-center bg-neutral-900 border border-white/5 opacity-40">
-           <span className="text-white/20 text-3xl font-bold uppercase tracking-tighter opacity-10 rotate-[-12deg] select-none">GioCrete Archive</span>
-        </div>
-      )}
 
-      
       {/* Industrial Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-70 group-hover:opacity-85 transition-opacity duration-500" />
 

@@ -1,18 +1,33 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { HoverButton } from '../../components/HoverButton';
-import { services } from '../../data/services';
+import { client } from '../../sanity/lib/client';
+import { serviceBySlugQuery } from '../../sanity/lib/queries';
+import { services as staticServices } from '../../data/services';
 
-export const prerender = true;
+// SSR: fetch service by slug from URL on every request
+const { slug } = Astro.params;
 
-export async function getStaticPaths() {
-  return services.map(service => ({
-    params: { slug: service.slug },
-    props: { service },
-  }));
+// 1. Try Sanity first
+let service = await client.fetch(serviceBySlugQuery, { slug });
+
+// 2. Fall back to static data (handles the 3 built-in slugs if CMS is empty)
+if (!service) {
+  service = staticServices.find((s) => s.slug === slug) ?? null;
 }
 
-const { service } = Astro.props;
+// 3. Nothing found → 404
+if (!service) {
+  return Astro.redirect('/404');
+}
+
+// Fallback image map
+const FALLBACK_IMAGES: Record<string, string> = {
+  'sewer-systems':         '/images/sewer-systems.png',
+  'watermain-replacement': '/images/watermain.png',
+  'road-reconstruction':   '/images/road-reconstruction.png',
+};
+const serviceImage = service.image || FALLBACK_IMAGES[service.slug] || '/images/random.png';
 ---
 
 <Layout title={service.title} headerVariant="dark">
@@ -20,7 +35,7 @@ const { service } = Astro.props;
   <section class="min-h-[85vh] relative flex flex-col justify-end bg-charcoal text-light overflow-hidden px-6 py-24 md:p-24 lg:p-32">
     <div class="absolute inset-0 z-0">
       <img 
-        src={service.image} 
+        src={serviceImage} 
         alt={service.title} 
         class="w-full h-full object-cover opacity-30 grayscale group-hover:grayscale-0 transition-all duration-1000"
       />
@@ -38,7 +53,7 @@ const { service } = Astro.props;
       </p>
       
       <div class="flex flex-wrap gap-6 md:gap-12 mt-12 border-t border-white/10 pt-12">
-        {service.stats.map(stat => (
+        {(service.stats || []).map((stat: any) => (
           <div>
             <span class="text-2xl md:text-4xl font-semibold editorial-title block text-light">{stat.value}</span>
             <span class="text-[10px] uppercase tracking-widest text-white/40">{stat.label}</span>
@@ -72,7 +87,7 @@ const { service } = Astro.props;
           <div class="bg-concrete dark:bg-black p-6 md:p-12 border border-site-border dark:border-white/5 sticky top-32">
              <span class="label">Technical Scope</span>
              <ul class="space-y-8">
-                {service.features.map(feature => (
+                {(service.features || []).map((feature: any) => (
                   <li class="flex items-start gap-4">
                      <span class="text-accent mt-1">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">

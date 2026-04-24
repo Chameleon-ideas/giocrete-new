@@ -13,7 +13,30 @@ export const projectsQuery = groq`*[_type == "project"] | order(_createdAt desc)
   challenge
 }`
 
+export const projectBySlugQuery = groq`*[_type == "project" && slug.current == $slug][0] {
+  title,
+  "slug": slug.current,
+  client,
+  municipality,
+  location,
+  type,
+  "image": image.asset->url,
+  overview,
+  scope,
+  challenge
+}`
+
 export const servicesQuery = groq`*[_type == "service"] | order(_createdAt asc) {
+  title,
+  "slug": slug.current,
+  "image": image.asset->url,
+  shortDesc,
+  fullDesc,
+  features,
+  stats
+}`
+
+export const serviceBySlugQuery = groq`*[_type == "service" && slug.current == $slug][0] {
   title,
   "slug": slug.current,
   "image": image.asset->url,
