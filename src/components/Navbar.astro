@@ -24,10 +24,13 @@ const pages =
 
 const ctaLabel = "Contact Us";
 const ctaHref = "/contact";
+
+const isHomePage = Astro.url.pathname === "/";
+const isOpaqueVariant = !isHomePage;
 ---
 
 <header
-  class={`site-header transition-all duration-500 fixed top-0 left-0 right-0 z-[500] py-6 md:py-8 px-6 md:px-12 flex justify-between items-center group/header pointer-events-auto ${variant === "dark" ? "text-white" : "text-black dark:text-white"} ${variant === "light" ? "site-header--light" : ""}`}
+  class={`site-header transition-all duration-500 fixed top-0 left-0 right-0 z-[500] py-6 md:py-8 px-6 md:px-12 flex justify-between items-center group/header pointer-events-auto ${isHomePage && variant === "dark" ? "text-white" : "text-black dark:text-white"} ${variant === "light" ? "site-header--light" : ""} ${isOpaqueVariant ? "site-header--opaque" : ""}`}
 >
   <!-- Logo -->
   <a href="/" class="nav-logo flex items-center group" aria-label="GioCrete">
@@ -125,7 +128,8 @@ const ctaHref = "/contact";
     <img
       src={settings?.logo || "/images/nav-logo.png"}
       alt={settings?.siteName || "GioCrete"}
-      class="h-12 w-auto brightness-0 invert"
+      class="h-12 w-auto"
+      id="mobile-nav-logo"
     />
     <button
       id="close-menu"
@@ -207,7 +211,33 @@ const ctaHref = "/contact";
     color: white !important;
   }
 
-  /* Handle white hero state (variant='light') logo color when NOT scrolled */
+  /* Force opaque state for non-home pages */
+  .site-header--opaque {
+    padding-block: 1rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--clr-border);
+    color: black !important;
+  }
+
+  :global([data-theme="dark"]) .site-header--opaque {
+    background-color: rgba(18, 18, 18, 0.95);
+    color: white !important;
+  }
+
+  /* Default Logo (Black/Original) */
+  #nav-logo-img {
+    filter: none;
+    transition: filter 0.5s ease;
+  }
+
+  /* White Logo Case (Dark Mode, Home Hero, or Mobile Menu) */
+  :global([data-theme="dark"]) #nav-logo-img,
+  .site-header.text-white:not(.scrolled) #nav-logo-img,
+  #mobile-nav-logo {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+  }
 </style>
 
 <script is:inline>

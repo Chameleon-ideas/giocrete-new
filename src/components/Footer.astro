@@ -1,6 +1,6 @@
 ---
-import { client } from '../sanity/lib/client';
-import { settingsQuery } from '../sanity/lib/queries';
+import { client } from "../sanity/lib/client";
+import { settingsQuery } from "../sanity/lib/queries";
 
 interface Props {
   settings?: any;
@@ -9,38 +9,54 @@ interface Props {
 const { settings: propsSettings } = Astro.props;
 
 // Use settings from props if available, otherwise fetch
-const settings = propsSettings || await client.fetch(settingsQuery);
+const settings = propsSettings || (await client.fetch(settingsQuery));
 
-const siteName = settings?.siteName || 'GioCrete Construction';
+const siteName = settings?.siteName || "GioCrete Construction";
 const currentYear = new Date().getFullYear();
 ---
 
 <footer class="bg-black text-white py-24 mt-auto relative overflow-hidden">
   <!-- Subtle Industrial Background -->
-  <div class="absolute inset-0 opacity-5 pointer-events-none select-none flex items-center justify-center">
-     <span class="text-[clamp(10rem,30vw,30rem)] font-bold editorial-title whitespace-nowrap">GIOCRETE</span>
+  <div
+    class="absolute inset-0 opacity-5 pointer-events-none select-none flex items-center justify-center"
+  >
+    <span
+      class="text-[clamp(10rem,30vw,30rem)] font-bold editorial-title whitespace-nowrap"
+      >GIOCRETE</span
+    >
   </div>
 
   <div class="container relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
-      
       <!-- Brand Column -->
       <div class="lg:col-span-4">
         <a href="/" class="flex items-center mb-10 group" aria-label="GioCrete">
-          <img 
-            src={settings?.logoFooter || "/images/footer-logo.png"} 
-            alt="GioCrete" 
-            class="h-24 w-auto object-contain transition-all duration-700 group-hover:scale-105" 
+          <img
+            src={settings?.logoFooter || "/images/footer-logo.png"}
+            alt="GioCrete"
+            class="h-24 w-auto object-contain transition-all duration-700 group-hover:scale-105"
           />
         </a>
 
-
         <p class="text-white/50 text-lg leading-relaxed max-w-sm mb-12">
-          {settings?.footerDescription || "Specialized civil contractor focusing on the backbone of Toronto's infrastructure since 2007."}
+          {
+            settings?.footerDescription ||
+              "Specialized civil contractor focusing on the backbone of Toronto's infrastructure since 2007."
+          }
         </p>
         <div class="flex gap-6">
-           <a href={settings?.instagram || "https://instagram.com/giocreteconstruction"} target="_blank" class="text-white/30 hover:text-accent transition-colors">Instagram</a>
-           <a href={settings?.linkedin || "#"} class="text-white/30 hover:text-accent transition-colors">LinkedIn</a>
+          <a
+            href={settings?.instagram ||
+              "https://instagram.com/giocreteconstruction"}
+            target="_blank"
+            class="text-white/30 hover:text-accent transition-colors"
+            >Instagram</a
+          >
+          <a
+            href={settings?.linkedin || "#"}
+            class="text-white/30 hover:text-accent transition-colors"
+            >LinkedIn</a
+          >
         </div>
       </div>
 
@@ -48,9 +64,27 @@ const currentYear = new Date().getFullYear();
       <div class="lg:col-span-2">
         <span class="label !text-white/40 mb-8">Navigation</span>
         <ul class="space-y-4">
-          {(settings?.navigation && settings.navigation.length > 0 ? settings.navigation : [{ label: 'Overview', href: '/' }, { label: 'Specializations', href: '/services' }, { label: 'Operations', href: '/projects' }, { label: 'About', href: '/about' }, { label: 'Careers', href: '/careers' }]).map((item: any) => (
-            <li><a href={item.href} class="text-sm font-bold uppercase tracking-widest hover:text-accent transition-colors">{item.label}</a></li>
-          ))}
+          {
+            (settings?.navigation && settings.navigation.length > 0
+              ? settings.navigation
+              : [
+                  { label: "Overview", href: "/" },
+                  { label: "Specializations", href: "/services" },
+                  { label: "Operations", href: "/projects" },
+                  { label: "About", href: "/about" },
+                  { label: "Careers", href: "/careers" },
+                ]
+            ).map((item: any) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-sm font-bold uppercase tracking-widest hover:text-accent transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
@@ -58,33 +92,75 @@ const currentYear = new Date().getFullYear();
       <div class="lg:col-span-2">
         <span class="label !text-white/40 mb-8">Specialties</span>
         <ul class="space-y-4">
-          {['Sewer Systems', 'Watermains', 'Roadworks', 'Safety'].map(item => (
-            <li><a href="/services" class="text-sm font-bold uppercase tracking-widest hover:text-accent transition-colors">{item}</a></li>
-          ))}
+          {
+            ["Sewer Systems", "Watermains", "Roadworks", "Safety"].map(
+              (item) => (
+                <li>
+                  <a
+                    href="/services"
+                    class="text-sm font-bold uppercase tracking-widest hover:text-accent transition-colors"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ),
+            )
+          }
         </ul>
       </div>
 
       <!-- Contact Column -->
       <div class="lg:col-span-4 lg:text-right">
         <span class="label !text-white/40 mb-8">General Inquiries</span>
-        <a href={`mailto:${settings?.email || "office@giocrete.com"}`} class="editorial-title text-xl sm:text-2xl md:text-4xl block mb-4 hover:text-accent transition-colors break-all">{settings?.email || "office@giocrete.com"}</a>
-        <a href={`tel:${(settings?.phone || "4167434100").replace(/\D/g, '')}`} class="editorial-title text-2xl sm:text-3xl md:text-4xl block mb-12 hover:text-accent transition-colors">{settings?.phone || "+1 416 743 4100"}</a>
-        <p class="text-white/40 text-sm uppercase tracking-widest" set:html={(settings?.address || "101 Kenhar Drive, <br/>North York, ON, M9L 1N5").replace(", ", ", <br/>")} />
+        <a
+          href={`mailto:${settings?.email || "office@giocrete.com"}`}
+          class="editorial-title text-md sm:text-lg md:text-xl block mb-4 hover:text-accent transition-colors break-all"
+          >{settings?.email || "office@giocrete.com"}</a
+        >
+        <a
+          href={`tel:${(settings?.phone || "4167434100").replace(/\D/g, "")}`}
+          class="editorial-title text-md sm:text-lg md:text-xl block mb-12 hover:text-accent transition-colors"
+          >{settings?.phone || "+1 416 743 4100"}</a
+        >
+        <p
+          class="text-white/40 text-sm uppercase tracking-widest"
+          set:html={(
+            settings?.address ||
+            "101 Kenhar Drive, <br/>North York, ON, M9L 1N5"
+          ).replace(", ", ", <br/>")}
+        />
       </div>
     </div>
 
     <!-- Bottom Bar -->
     <div class="h-[1px] w-full bg-white/10 mb-12"></div>
-    
+
     <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-      <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 text-center md:text-left">
-        © {currentYear} {siteName}. All rights reserved. <br class="md:hidden"/>
-        Designed and Developed by <a href="https://chameleon-ideas.com" target="_blank" rel="noopener noreferrer" class="text-accent hover:text-white transition-colors">Chameleon Ideas</a>
+      <div
+        class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 text-center md:text-left"
+      >
+        © {currentYear}
+        {siteName}. All rights reserved. <br class="md:hidden" />
+        Designed and Developed by <a
+          href="https://chameleon-ideas.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-accent hover:text-white transition-colors"
+          >Chameleon Ideas</a
+        >
       </div>
-      <div class="flex gap-8 items-center opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
-         <span class="text-[10px] font-bold uppercase tracking-widest">Local 183</span>
-         <span class="text-[10px] font-bold uppercase tracking-widest">Local 793</span>
-         <span class="text-[10px] font-bold uppercase tracking-widest">COR Certified</span>
+      <div
+        class="flex gap-8 items-center opacity-40 grayscale hover:grayscale-0 transition-all duration-700"
+      >
+        <span class="text-[10px] font-bold uppercase tracking-widest"
+          >Local 183</span
+        >
+        <span class="text-[10px] font-bold uppercase tracking-widest"
+          >Local 793</span
+        >
+        <span class="text-[10px] font-bold uppercase tracking-widest"
+          >COR Certified</span
+        >
       </div>
     </div>
   </div>
